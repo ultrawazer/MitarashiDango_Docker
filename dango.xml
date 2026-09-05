@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>dango</Name>
+  <Repository>ghcr.io/ultrawazer/dango:latest</Repository>
+  <Registry>https://github.com/ultrawazer/Dando_Docker/pkgs/container/dango</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/ultrawazer/dango/issues</Support>
+  <Project>https://github.com/ultrawazer/dango</Project>
+  <Overview>Dango is a lightweight, local-first anime media client and tracker designed for performance, privacy, and low resource usage. It lets you explore anime metadata, manage personal watchlists, view viewing statistics, and synchronize watch progress with AniList, MyAnimeList, Google Drive, and GitHub.&#xD;
+&#xD;
+[b]Default WebUI:[/b] http://[IP]:3000&#xD;
+[b]Persistent Data:[/b] All databases, settings, and sync manifests are stored under /config/dango/ (mapped to /mnt/user/appdata/dango by default).</Overview>
+  <Category>MediaApp:Video MediaApp:Other Status:Stable</Category>
+  <WebUI>http://[IP]:[PORT:3000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/ultrawazer/Dando_Docker/main/dango.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/ultrawazer/dango/main/client/public/logo.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="WebUI Port" Target="3000" Default="3000" Mode="tcp" Description="Web interface port accessible from your browser." Type="Port" Display="always" Required="true" Mask="false">3000</Config>
+  <Config Name="Appdata Storage" Target="/config" Default="/mnt/user/appdata/dango" Mode="rw" Description="Location on your Unraid server where Dango stores the SQLite database (anime.db), sync tokens, and config files." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/dango</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Description="User ID for file permissions (Unraid default: 99 / nobody)." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Description="Group ID for file permissions (Unraid default: 100 / users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="UMASK" Target="UMASK" Default="022" Description="File permission mask (default: 022)." Type="Variable" Display="advanced" Required="false" Mask="false">022</Config>
+  <Config Name="Timezone" Target="TZ" Default="UTC" Description="Container timezone (e.g. America/New_York, Europe/Berlin, UTC)." Type="Variable" Display="advanced" Required="false" Mask="false">UTC</Config>
+</Container>

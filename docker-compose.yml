@@ -1,0 +1,20 @@
+services:
+  dango:
+    image: ghcr.io/ultrawazer/dango:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REPO_URL: https://github.com/ultrawazer/dango.git
+        BRANCH: main
+    container_name: dango
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PUID=99
+      - PGID=100
+      - UMASK=022
+      - TZ=UTC
+    volumes:
+      - ./appdata:/config
