@@ -16,5 +16,12 @@ services:
       - PGID=100
       - UMASK=022
       - TZ=UTC
+      - SHOKO_URL=http://192.168.1.100
+      - SHOKO_PORT=8111
+      - SHOKO_API_KEY=
+      - HW_ACCEL=auto
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - ./appdata:/config
+      - /tmp/dango-transcode:/transcode

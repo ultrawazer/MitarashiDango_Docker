@@ -40,12 +40,20 @@ FROM node:22-alpine AS runner
 # - ca-certificates: SSL certificates for API & scraper traffic
 # - curl: health check probes
 # - rclone: cloud sync support built into Dango
+# - ffmpeg: media remuxing, subtitle extraction, audio transcoding
+# - libva-intel-driver, intel-media-driver, mesa-va-gallium: GPU hardware acceleration
+# - libva-utils: vainfo for hardware acceleration diagnostics
 RUN apk add --no-cache \
     su-exec \
     tzdata \
     ca-certificates \
     curl \
-    rclone
+    rclone \
+    ffmpeg \
+    libva-intel-driver \
+    intel-media-driver \
+    mesa-va-gallium \
+    libva-utils
 
 WORKDIR /app
 
@@ -68,13 +76,14 @@ ENV NODE_ENV=production \
     PUID=99 \
     PGID=100 \
     UMASK=022 \
-    XDG_DATA_HOME=/config
+    XDG_DATA_HOME=/config \
+    TRANSCODE_DIR=/transcode
 
 # Expose Web interface
 EXPOSE 3000
 
-# Persistent data mount point
-VOLUME ["/config"]
+# Persistent data mount points
+VOLUME ["/config", "/transcode"]
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \

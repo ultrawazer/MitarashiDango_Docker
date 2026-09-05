@@ -9,15 +9,16 @@
   <Privileged>false</Privileged>
   <Support>https://github.com/ultrawazer/dango/issues</Support>
   <Project>https://github.com/ultrawazer/dango</Project>
-  <Overview>Dango is a lightweight, local-first anime media client and tracker designed for performance, privacy, and low resource usage. It lets you explore anime metadata, manage personal watchlists, view viewing statistics, and synchronize watch progress with AniList, MyAnimeList, Google Drive, and GitHub.&#xD;
+  <Overview>Dango is a lightweight, local-first anime media client and tracker designed for performance, privacy, and low resource usage. Featuring full Shoko Server integration for local MKV/MP4 playback, hardware-accelerated on-the-fly remuxing, dual-audio and subtitle track selection, two-way watch status scrobbling, and offline AniDB-AniList cross-referencing.&#xD;
 &#xD;
 [b]Default WebUI:[/b] http://[IP]:3000&#xD;
-[b]Persistent Data:[/b] All databases, settings, and sync manifests are stored under /config/dango/ (mapped to /mnt/user/appdata/dango by default).</Overview>
+[b]Persistent Data:[/b] All databases, settings, and sync manifests are stored under /config/dango/ (mapped to /mnt/user/appdata/dango by default).&#xD;
+[b]Hardware Acceleration:[/b] Map /dev/dri to enable Intel QuickSync (VAAPI) or AMD GPU hardware transcoding.</Overview>
   <Category>MediaApp:Video MediaApp:Other Status:Stable</Category>
   <WebUI>http://[IP]:[PORT:3000]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/ultrawazer/Dando_Docker/main/dango.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/ultrawazer/dango/main/client/public/logo.png</Icon>
-  <ExtraParams/>
+  <ExtraParams>--device /dev/dri</ExtraParams>
   <PostArgs/>
   <CPUset/>
   <DateInstalled/>
@@ -26,6 +27,12 @@
   <Requires/>
   <Config Name="WebUI Port" Target="3000" Default="3000" Mode="tcp" Description="Web interface port accessible from your browser." Type="Port" Display="always" Required="true" Mask="false">3000</Config>
   <Config Name="Appdata Storage" Target="/config" Default="/mnt/user/appdata/dango" Mode="rw" Description="Location on your Unraid server where Dango stores the SQLite database (anime.db), sync tokens, and config files." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/dango</Config>
+  <Config Name="Transcode Scratch Path" Target="/transcode" Default="/tmp/dango-transcode" Mode="rw" Description="Scratch directory for remuxing and video transcoding. Using /tmp/dango-transcode (RAM) or cache drive provides high performance." Type="Path" Display="always" Required="false" Mask="false">/tmp/dango-transcode</Config>
+  <Config Name="Shoko Server URL" Target="SHOKO_URL" Default="http://192.168.1.100" Description="URL/IP of your Shoko Server instance (e.g., http://192.168.1.100 or http://[HOST_IP])." Type="Variable" Display="always" Required="false" Mask="false">http://192.168.1.100</Config>
+  <Config Name="Shoko Server Port" Target="SHOKO_PORT" Default="8111" Description="Port for Shoko Server (default: 8111)." Type="Variable" Display="always" Required="false" Mask="false">8111</Config>
+  <Config Name="Shoko API Key" Target="SHOKO_API_KEY" Default="" Description="Optional API Key for Shoko Server authentication (can also be configured in Dango Settings UI)." Type="Variable" Display="always" Required="false" Mask="true"></Config>
+  <Config Name="Hardware Acceleration" Target="HW_ACCEL" Default="auto" Description="Hardware acceleration mode: auto, vaapi (Intel/AMD), nvenc (NVIDIA), or software." Type="Variable" Display="always" Required="false" Mask="false">auto</Config>
+  <Config Name="GPU /dev/dri Device" Target="/dev/dri" Default="/dev/dri" Mode="" Description="Pass through Intel QuickSync / AMD VAAPI GPU device for hardware accelerated video playback." Type="Device" Display="always" Required="false" Mask="false">/dev/dri</Config>
   <Config Name="PUID" Target="PUID" Default="99" Description="User ID for file permissions (Unraid default: 99 / nobody)." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
   <Config Name="PGID" Target="PGID" Default="100" Description="Group ID for file permissions (Unraid default: 100 / users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
   <Config Name="UMASK" Target="UMASK" Default="022" Description="File permission mask (default: 022)." Type="Variable" Display="advanced" Required="false" Mask="false">022</Config>

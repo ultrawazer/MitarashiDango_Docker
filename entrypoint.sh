@@ -14,6 +14,7 @@ echo " User UID: ${PUID}"
 echo " User GID: ${PGID}"
 echo " Umask:    ${UMASK}"
 echo " Appdata:  /config (XDG_DATA_HOME: ${XDG_DATA_HOME})"
+echo " Transcode: ${TRANSCODE_DIR:-/transcode}"
 echo "========================================================"
 
 # Manage group
@@ -40,11 +41,30 @@ else
     USER_NAME="dango"
 fi
 
-# Ensure data directory exists
-mkdir -p /config/dango
+# Manage GPU hardware acceleration device nodes (/dev/dri)
+if [ -d /dev/dri ]; then
+    for node in /dev/dri/*; do
+        if [ -e "$node" ]; then
+            DEV_GID=$(stat -c '%g' "$node" 2>/dev/null || stat -f '%g' "$node" 2>/dev/null)
+            if [ -n "$DEV_GID" ] && [ "$DEV_GID" != "0" ]; then
+                DEV_GRP=$(getent group "$DEV_GID" | cut -d: -f1)
+                if [ -z "$DEV_GRP" ]; then
+                    DEV_GRP="gpu_${DEV_GID}"
+                    addgroup -g "$DEV_GID" "$DEV_GRP" >/dev/null 2>&1 || true
+                fi
+                adduser "$USER_NAME" "$DEV_GRP" >/dev/null 2>&1 || true
+            fi
+        fi
+    done
+fi
 
-# Set ownership of /config to user:group
+# Ensure data and transcode directories exist
+mkdir -p /config/dango
+mkdir -p "${TRANSCODE_DIR:-/transcode}"
+
+# Set ownership to user:group
 chown -R "$PUID:$PGID" /config
+chown -R "$PUID:$PGID" "${TRANSCODE_DIR:-/transcode}"
 
 # Execute process with dropped privileges via su-exec
 # Using 'exec' ensures Node.js receives SIGTERM directly for clean SQLite WAL checkpoints
