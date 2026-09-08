@@ -18,8 +18,7 @@ Docker container packaging and Unraid template for [MitarashiDango](https://gith
 - **Unraid-Native Permissions**: Dynamic `PUID` and `PGID` mapping (defaults to Unraid's `nobody:users` `99:100`) via `su-exec` to prevent permission lockouts on your cache drives or appdata share.
 - **Persistent Appdata**: Mounts `/config` (typically `/mnt/user/appdata/dango`) where SQLite databases (`anime.db`), WAL files, installed extensions, sync manifests, and `.env` are safely preserved.
 - **Graceful Shutdown**: Direct `SIGTERM` signal propagation ensures SQLite WAL checkpoints complete before container termination, preventing database corruption during Unraid reboot or container updates.
-- **Pre-installed Rclone**: Ready out-of-the-box for cloud sync support.
-- **Multi-Architecture**: Supports both `linux/amd64` (Intel/AMD x86_64) and `linux/arm64` (ARM devices / Raspberry Pi).
+- **Optimized for x86_64 (Unraid)**: Native support for `linux/amd64` systems (Intel QuickSync & AMD VAAPI hardware transcoding).
 
 ---
 
