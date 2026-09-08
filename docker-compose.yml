@@ -1,13 +1,13 @@
 services:
-  dango:
-    image: ghcr.io/ultrawazer/dango:latest
+  mitarashidango:
+    image: ghcr.io/ultrawazer/mitarashidango:latest
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        REPO_URL: https://github.com/ultrawazer/dango.git
+        REPO_URL: https://github.com/ultrawazer/MitarashiDango.git
         BRANCH: main
-    container_name: dango
+    container_name: mitarashidango
     restart: unless-stopped
     ports:
       - "3000:3000"

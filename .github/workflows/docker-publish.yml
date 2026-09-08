@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build and Publish MitarashiDango Docker Image
 
 on:
   push:
@@ -8,14 +8,14 @@ on:
       - 'v*'
   workflow_dispatch:
     inputs:
-      dango_branch:
-        description: 'Dango branch or tag to build'
+      branch:
+        description: 'MitarashiDango branch or tag to build'
         required: true
         default: 'main'
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/dango
+  IMAGE_NAME: ${{ github.repository_owner }}/mitarashidango
 
 jobs:
   build-and-push:
@@ -54,11 +54,11 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=ref,event=branch
 
-      - name: Determine Dango source branch/tag
+      - name: Determine source branch/tag
         id: source-ref
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "branch=${{ github.event.inputs.dango_branch }}" >> $GITHUB_OUTPUT
+            echo "branch=${{ github.event.inputs.branch }}" >> $GITHUB_OUTPUT
           elif [ "${{ startsWith(github.ref, 'refs/tags/v') }}" = "true" ]; then
             echo "branch=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           else
@@ -74,6 +74,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
+            REPO_URL=https://github.com/ultrawazer/MitarashiDango.git
             BRANCH=${{ steps.source-ref.outputs.branch }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

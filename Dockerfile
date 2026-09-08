@@ -11,7 +11,7 @@ WORKDIR /app
 RUN apk add --no-cache git
 
 # Build arguments for repository source and version/branch
-ARG REPO_URL=https://github.com/ultrawazer/dango.git
+ARG REPO_URL=https://github.com/ultrawazer/MitarashiDango.git
 ARG BRANCH=main
 
 # Clone repository
@@ -77,7 +77,8 @@ ENV NODE_ENV=production \
     PGID=100 \
     UMASK=022 \
     XDG_DATA_HOME=/config \
-    TRANSCODE_DIR=/transcode
+    TRANSCODE_DIR=/transcode \
+    EXTENSIONS_DIR=/config/dango/extensions
 
 # Expose Web interface
 EXPOSE 3000
@@ -90,4 +91,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
     CMD curl -f http://localhost:3000/ || exit 1
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["node", "--max-old-space-size=256", "server/dist/server.js"]
+CMD ["node", "--max-old-space-size=512", "server/dist/server.js"]

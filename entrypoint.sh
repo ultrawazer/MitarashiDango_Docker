@@ -9,7 +9,7 @@ UMASK=${UMASK:-022}
 umask "$UMASK"
 
 echo "========================================================"
-echo " Starting Dango Container"
+echo " Starting MitarashiDango Container"
 echo " User UID: ${PUID}"
 echo " User GID: ${PGID}"
 echo " Umask:    ${UMASK}"
@@ -58,9 +58,15 @@ if [ -d /dev/dri ]; then
     done
 fi
 
-# Ensure data and transcode directories exist
-mkdir -p /config/dango
+# Ensure persistent data, extensions, and transcode directories exist
+mkdir -p /config/dango/extensions
 mkdir -p "${TRANSCODE_DIR:-/transcode}"
+
+# Ensure /app/server/data/extensions links to persistent /config/dango/extensions
+# This prevents permission errors and ensures dynamic extensions persist across restarts
+mkdir -p /app/server/data
+ln -sfn /config/dango/extensions /app/server/data/extensions
+chown -R "$PUID:$PGID" /app/server/data
 
 # Set ownership to user:group
 chown -R "$PUID:$PGID" /config
