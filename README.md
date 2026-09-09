@@ -151,6 +151,9 @@ docker compose up -d
 | `SHOKO_PORT` | `8111` | Shoko Server port. |
 | `SHOKO_API_KEY` | *(empty)* | Optional Shoko API key. |
 | `HW_ACCEL` | `auto` | Hardware acceleration mode: `auto`, `vaapi`, `nvenc`, or `software`. |
+| `FLARESOLVERR_ENABLED` | `false` | Enable FlareSolverr integration to automatically solve Cloudflare challenges (`true`/`false`). |
+| `FLARESOLVERR_URL` | `http://flaresolverr` | FlareSolverr host address (e.g. `http://flaresolverr` or `http://192.168.1.100`). |
+| `FLARESOLVERR_PORT` | `8191` | FlareSolverr listening port. |
 
 ---
 

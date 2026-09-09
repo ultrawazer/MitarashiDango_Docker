@@ -20,8 +20,25 @@ services:
       - SHOKO_PORT=8111
       - SHOKO_API_KEY=
       - HW_ACCEL=auto
+      - FLARESOLVERR_ENABLED=false
+      - FLARESOLVERR_URL=http://flaresolverr
+      - FLARESOLVERR_PORT=8191
     devices:
       - /dev/dri:/dev/dri
     volumes:
       - ./appdata:/config
       - /tmp/dango-transcode:/transcode
+    depends_on:
+      - flaresolverr
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=UTC
+    ports:
+      - "8191:8191"
+    restart: unless-stopped
