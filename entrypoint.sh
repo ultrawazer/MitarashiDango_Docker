@@ -72,7 +72,9 @@ chown -R "$PUID:$PGID" /app/server/data
 # Set ownership to user:group
 chown -R "$PUID:$PGID" /config
 chown -R "$PUID:$PGID" "${TRANSCODE_DIR:-/transcode}"
+# Ensure Node module resolution finds host packages for dynamically installed extensions
+export NODE_PATH="/app/node_modules:/app/server/node_modules${NODE_PATH:+:$NODE_PATH}"
 
 # Execute process with dropped privileges via su-exec
 # Using 'exec' ensures Node.js receives SIGTERM directly for clean SQLite WAL checkpoints
-exec su-exec "$USER_NAME:$GROUP_NAME" "$@"
+exec su-exec "$USER_NAME:$GROUP_NAME" env NODE_PATH="$NODE_PATH" "$@"

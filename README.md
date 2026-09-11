@@ -59,7 +59,7 @@ If you are adding the container manually through the Unraid WebGUI:
    - **Repository**: `ghcr.io/ultrawazer/mitarashidango:latest`
    - **Network Type**: `Bridge`
    - **WebUI**: `http://[IP]:[PORT:3000]/`
-   - **Icon URL**: `https://raw.githubusercontent.com/ultrawazer/MitarashiDango/main/client/public/logo.png`
+   - **Icon URL**: `https://raw.githubusercontent.com/ultrawazer/MitarashiDango/main/client/public/LogoDangoWithoutText.png`
    - **Extra Parameters**: `--device /dev/dri`
 3. Add the following paths and variables:
    - **Port**: Container Port `3000` &rarr; Host Port `3000`

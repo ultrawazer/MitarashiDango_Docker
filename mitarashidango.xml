@@ -17,7 +17,7 @@
   <Category>MediaApp:Video MediaApp:Other Status:Stable</Category>
   <WebUI>http://[IP]:[PORT:3000]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/ultrawazer/Dando_Docker/main/mitarashidango.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/ultrawazer/MitarashiDango/main/client/public/logo.png</Icon>
+  <Icon>https://raw.githubusercontent.com/ultrawazer/MitarashiDango/main/client/public/LogoDangoWithoutText.png</Icon>
   <ExtraParams>--device /dev/dri</ExtraParams>
   <PostArgs/>
   <CPUset/>

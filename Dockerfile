@@ -72,6 +72,7 @@ RUN chmod +x /entrypoint.sh
 
 # Unraid & Container Environment Defaults
 ENV NODE_ENV=production \
+    NODE_PATH=/app/node_modules:/app/server/node_modules \
     PORT=3000 \
     PUID=99 \
     PGID=100 \
