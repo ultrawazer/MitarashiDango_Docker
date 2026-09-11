@@ -43,6 +43,7 @@ fi
 
 # Manage GPU hardware acceleration device nodes (/dev/dri)
 if [ -d /dev/dri ]; then
+    chmod 666 /dev/dri/* 2>/dev/null || true
     for node in /dev/dri/*; do
         if [ -e "$node" ]; then
             DEV_GID=$(stat -c '%g' "$node" 2>/dev/null || stat -f '%g' "$node" 2>/dev/null)
