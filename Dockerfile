@@ -13,9 +13,11 @@ RUN apk add --no-cache git
 # Build arguments for repository source and version/branch
 ARG REPO_URL=https://github.com/ultrawazer/MitarashiDango.git
 ARG BRANCH=main
+ARG APP_COMMIT=""
 
-# Clone repository
-RUN git clone --depth 1 --branch ${BRANCH} ${REPO_URL} .
+# Clone repository (APP_COMMIT invalidates cache when a new commit is built)
+RUN echo "Building ref: ${BRANCH}, commit: ${APP_COMMIT}" && \
+    git clone --depth 1 --branch ${BRANCH} ${REPO_URL} .
 
 # Install dependencies (npm workspaces)
 RUN npm ci
